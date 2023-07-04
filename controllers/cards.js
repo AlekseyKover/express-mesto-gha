@@ -40,7 +40,7 @@ const deleteCard = (req, res) => {
       if (!card) {
         res
           .status(NOT_FOUND)
-          .send({ message: 'Карточка с указанным _id не найдена.' });
+          .send({ message: 'Карточка с указанным id не найдена.' });
       } else {
         res.send(card);
       }
@@ -69,7 +69,7 @@ const likeCard = (req, res) => {
       return res.send(card);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         res
           .status(ERROR_CODE).send({ message: 'Переданы некорректные данные для постановки/снятии лайка.', error: err });
       } else {
@@ -93,7 +93,7 @@ const dislikeCard = (req, res) => {
       return res.send(card);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         res
           .status(ERROR_CODE)
           .send({ message: 'Переданы некорректные данные для постановки/снятии лайка.', error: err });
