@@ -44,6 +44,15 @@ const deleteCard = (req, res) => {
       } else {
         res.send(card);
       }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(ERROR_CODE).send({ message: 'Данные введены некорректно' });
+      } else {
+        res
+          .status(GENERAL_ERROR_CODE)
+          .send({ message: 'Ошибка', error: err });
+      }
     });
 };
 
