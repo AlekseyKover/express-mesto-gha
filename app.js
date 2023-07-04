@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const NOT_FOUND = 404;
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(express.json());
@@ -19,5 +20,9 @@ app.use((req, res, next) => {
 
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/card'));
+
+app.use('*', (req, res) => {
+  res.status(NOT_FOUND).send({ message: 'Нет такого роута' });
+});
 
 app.listen(PORT);
