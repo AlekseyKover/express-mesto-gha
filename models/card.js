@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const link = require('../utils/links');
+
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -10,20 +12,25 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => link.test(v),
+      message: 'Неправильный формат ссылки',
+    },
   },
   owner: {
+    required: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true,
   },
   likes: [{
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     default: [],
   }],
   createdAt: {
-    type: Date,
     default: Date.now,
+    type: Date,
   },
-});
+}, { versionKey: false });
+
 module.exports = mongoose.model('card', cardSchema);
