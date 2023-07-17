@@ -26,6 +26,7 @@ const createUser = (req, res, next) => {
       User.create({
         name, about, avatar, email, password: hasHedPassword,
       })
+
         .then((user) => {
           res.send({ user });
         })

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const link = require('../utils/links');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (v) => link.test(v),
+      validator: (url) => validator.isURL(url),
       message: 'Неправильный формат ссылки',
     },
   },
