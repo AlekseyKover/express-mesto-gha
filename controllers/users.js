@@ -5,7 +5,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/user');
 const ErrorCode = require('../errors/ErrorCode');
 const ErrorNotFound = require('../errors/ErrorNotFound');
-
+const TokenError = require('../errors/TokenError');
 const RegisterError = require('../errors/RegisterError');
 
 const getUsers = (req, res, next) => {
@@ -49,7 +49,7 @@ const login = (req, res, next) => {
 
   User.findOne({ email })
     .select('+password')
-    .orFail(() => new Error('Пользователь не найден'))
+    .orFail(() => new TokenError('Пользователь не найден'))
     .then((user) => {
       bcrypt.compare(String(password), user.password)
         .then((isValidUser) => {
