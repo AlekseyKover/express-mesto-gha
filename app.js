@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 const auth = require('./middlwares/auth');
 const { createUser, login } = require('./controllers/users');
 const error = require('./middlwares/error');
@@ -41,5 +42,6 @@ app.use('/cards', require('./routes/card'));
 app.use('*', (req, res, next) => {
   next(new ErrorNotFound('Нет такого роута'));
 });
+app.use(errors());
 app.use(error);
 app.listen(PORT);

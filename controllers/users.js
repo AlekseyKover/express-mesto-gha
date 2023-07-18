@@ -33,13 +33,14 @@ const createUser = (req, res, next) => {
         .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new ErrorCode('Переданы некорректные данные при создании пользователя.'));
-          } else if (err.code === 11000) {
-            next(new RegisterError('Такой пользователь уже есть'));
-          } else {
-            next(err);
           }
+          if (err.code === 11000) {
+            next(new RegisterError('Такой пользователь уже есть'));
+          }
+          next(err);
         });
     })
+
     .catch(next);
 };
 

@@ -5,21 +5,27 @@ const userSchema = new mongoose.Schema({
   name: {
     default: 'Жак-Ив Кусто',
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 30,
+    validate: {
+      validator: ({ length }) => length >= 2 && length <= 30,
+      message: 'Имя пользователя должно быть длиной от 2 до 30 символов',
+    },
   },
   about: {
     default: 'Исследователь',
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 30,
+    validate: {
+      validator: ({ length }) => length >= 2 && length <= 30,
+      message: 'Имя пользователя должно быть длиной от 2 до 30 символов',
+    },
   },
   avatar: {
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     type: String,
-    required: true,
+
     validate: {
       validator: (url) => validator.isURL(url),
       message: 'Неправильный формат ссылки',
